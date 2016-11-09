@@ -1,7 +1,18 @@
-fx1=@(x) e^x+x;
+fx1=@(x) exp(x)+x;
 fx2=@(x) x^3+4*x^2-10*x+2;
 distancia = [0.5 1 2 5];
 x_inicial = -20;
 x_final =20;
-[intervalos] = generarSoportes(x_inicial,x_final, distancia);
-
+[intervalo05] = generarSoporte(x_inicial,x_final, distancia(1));
+[intervalo1] = generarSoporte(x_inicial,x_final, distancia(2));
+[intervalo2] = generarSoporte(x_inicial,x_final, distancia(3));
+[intervalo5] = generarSoporte(x_inicial,x_final, distancia(4));
+y1_05 = arrayfun(fx1,intervalo05);
+y1_1 = arrayfun(fx1,intervalo1);
+y1_2 = arrayfun(fx1,intervalo2);
+y1_5 = arrayfun(fx1,intervalo5);
+y2_05 = arrayfun(fx2,intervalo05);
+y2_1 = arrayfun(fx2,intervalo1);
+y2_2 = arrayfun(fx2,intervalo2);
+y2_5 = arrayfun(fx2,intervalo5);
+[Px]=minimosCuadrados(intervalo05,y1_05, 4);
