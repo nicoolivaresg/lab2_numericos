@@ -1,4 +1,4 @@
-function [ Px ] = minimosCuadrados( soporte, fx , grado)
+function [ Px, error ] = minimosCuadrados( soporte, fx , grado)
 %MINIMOSCUADRADOS Summary of this function goes here
 %   Detailed explanation goes here
 %   Función encargada de obtener los coeficientes de un polinomio de
@@ -29,6 +29,8 @@ function [ Px ] = minimosCuadrados( soporte, fx , grado)
     end
     Px = cholesky(A,B);
     Px =Px';
-    %Px = fliplr(Px);
+    Px = fliplr(Px);
+    %[error] = errorPolinomialInterp(fx,Px,soporte(n));
+    [error] = rmse(Px,fx,soporte);
 end
 

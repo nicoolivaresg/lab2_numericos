@@ -4,9 +4,9 @@ function [a,b,c,d]=splineCubico(x, fx)
 %Richard Burden, 2a. Edición, Grupo Editorial Iberoamérica.
 
 n=length(x);
-
+y = arrayfun(fx,x);
 for i=1:n;
-    a(i)=fx(i);
+    a(i)=y(i);
 end
 
 for i=1:n-1;
@@ -38,16 +38,16 @@ for i=n-1:-1:1;
 end
 
 
-%for i=1:n-1;
-%    x_p=x(i):0.1:x(i+1);
-%    y_p=a(i)+b(i)*(x_p-x(i))+c(i)*(x_p-x(i)).^2+d(i)*(x_p-x(i)).^3;
-%    hold on;
-%    plot(x_p,y_p,'b');
-%end
+for i=1:n-1;
+    x_p=x(i):0.1:x(i+1);
+    y_p=a(i)+b(i)*(x_p-x(i))+c(i)*(x_p-x(i)).^2+d(i)*(x_p-x(i)).^3;
+    hold on;
+    plot(x_p,y_p,'b');
+end
 
-%for i=1:n;
-%    hold on;
-%    plot (x(i),fx(i),'*','MarkerEdgeColor','r','LineWidth',1);
-%    title('Interpolación por "splines" de orden 3.');
-%end 
+for i=1:n;
+    hold on;
+    plot (x(i),fx(i),'*','MarkerEdgeColor','r','LineWidth',1);
+    title('Interpolación por "splines" de orden 3.');
+end 
 
