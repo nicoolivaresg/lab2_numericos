@@ -1,9 +1,8 @@
-function [ Px,error ] = inewtonDF( soporte, fx )
+function [ Px ] = inewtonDF( soporte, fx )
 %INEWTONDF Summary of this function goes here
 %   Detailed explanation goes here
 %   
     Px = [];
-    error = 0;
     y = arrayfun(fx,soporte);
     n = length(soporte);
     tabla = zeros(n);
@@ -25,18 +24,18 @@ function [ Px,error ] = inewtonDF( soporte, fx )
         coef = [coef tabla(1,i)];
     end
     %Se generan los coeficientes con los productos de (x-x0)...(x-xn)
-    Px=0;
-    for i=0:n-1
+
+    Px=coef(1);
+    for i=2:n
         pol=1;
-        for k=1:i
-            pol=conv(pol,[1 -soporte(k)]);
+        for j=0:i-2
+            pol=conv(pol,[1 -j]);
         end
-        if i<0
-            Px=polisum(Px,coef(1)*pol);   
-        else
-            Px=polisum(Px,coef(i+1)*pol);
-        end
+        pol = pol/factorial(i-1);
+        Px=polisum(Px,coef(i)*pol);
     end
-    [error] = rmse(Px,fx,soporte);
+    
+    Px=fliplr(coef);
+   % [error] = rmse(Px,fx,soporte);
 end
 
