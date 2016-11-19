@@ -39,7 +39,7 @@ end
 
 
 for i=1:n-1;
-    x_p=x(i):0.1:x(i+1);
+    x_p=x(i):0.1:x(i+1); %segmento para spline
     y_p=a(i)+b(i)*(x_p-x(i))+c(i)*(x_p-x(i)).^2+d(i)*(x_p-x(i)).^3;
     hold on;
     plot(x_p,y_p,'b');

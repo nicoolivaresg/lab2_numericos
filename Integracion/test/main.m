@@ -17,6 +17,7 @@ x_final =20;
 %Soporte [-20,20] con h = 0.05
 [soporte005] = generarSoporte(x_inicial,x_final, distancia(5));
 
+
 %%%%%%%%%%%%% INTERPOLACIÓN %%%%%%%%%%%%%%%%%%%
 %%%% Función f(x) = e^x+x  %%%%%
 
@@ -94,14 +95,39 @@ x_final =20;
 %Interpolación por Mínimos Cuadrados
 [PMC2_5] = minimosCuadrados(soporte5,fx2,3);
 
-%%% GRÁFICO %%%
-[PMC1_005] = minimosCuadrados(soporte005,fx1,3);
-[PNDD1_005] = inewtonDD(soporte005,fx1);
-[PNDF1_005] = inewtonDF(soporte005,fx1);
-[PMC2_005] = minimosCuadrados(soporte005,fx2,3);
-[PNDD2_005] = inewtonDD(soporte005,fx2);
-[PNDF2_005] = inewtonDF(soporte005,fx2);
 
+%%% GRÁFICO %%%
+ [PMC1_005] = minimosCuadrados(soporte005,fx1,3);
+ [PNDD1_005] = inewtonDD(soporte005,fx1);
+ [PNDF1_005] = inewtonDF(soporte005,fx1);
+ [PMC2_005] = minimosCuadrados(soporte005,fx2,3);
+ [PNDD2_005] = inewtonDD(soporte005,fx2);
+ [PNDF2_005] = inewtonDF(soporte005,fx2);
+ %hold off;
+ %hold on;
+ ymc1 = valoresGrafico(PMC1_005,soporte005);
+ %semilogy(soporte005,ymc1,'red');
+ %hold on
+ yndd1 = valoresGrafico(PNDD1_005,soporte005);
+ %semilogy(soporte005,yndd1,'yellow');
+ %hold on
+ yndf1 = valoresGrafico(PNDF1_005,soporte005);
+ %semilogy(soporte005,yndf1,'green');
+ %hold on;
+ 
+ ymc2 = valoresGrafico(PMC2_005,soporte005);
+ %semilogy(soporte005,ymc2,'cyan');
+ %hold on
+ yndd2 = valoresGrafico(PNDD2_005,soporte005);
+ %semilogy(soporte005,yndd2,'blue');
+ %hold on
+ yndf2 = valoresGrafico(PNDF2_005,soporte005);
+ %semilogy(soporte005,yndf2,'black');
+ %hold on;
+ %legend('show');
+ %hold off;
+ %print -deps grafico;
+ createfigure(soporte005,[ymc1;yndd1;yndf1;ymc2;yndd2;yndf2]);
 %%%% ERROR RMSE %%%%
 [eNDF1_05] = rmse(PNDF1_05,fx1,soporte005, 1);
 [eNDF1_1] = rmse(PNDF1_1,fx1,soporte005,1);
@@ -141,10 +167,9 @@ x_final =20;
 %   Para la funcion f(x) = e^x+x
 %0.   PMC1_05
 %1.   PNDD1_1
-%2.   PNDF1_5
 %   Para la funcion f(x) = x^3+4*x^2-10*x+2
-%3.   PMC2_2
-%4.   PNDD2_05
+%3.   PMC2_5
+%4.   PNDD2_5
 %5.   PNDF2_05
 
 %%VALORES REALES %%%
@@ -154,50 +179,45 @@ x_final =20;
 %%VALORES DE LA INTEGRACIÓN NUMÉRICA
 %   Para la funcion f(x) = e^x+x
 %0.   PMC1_05
-[intTrapMC0] = reglaTrapecio(PMC1_05,-20,20,5);
-[intSimpMC0] = reglaSimpson(PMC1_05,-20,20,5);
+[intTrapMC1_05] = reglaTrapecio(PMC1_05,-20,20,5);
+[intSimpMC1_05] = reglaSimpson(PMC1_05,-20,20,5);
 %1.   PNDD1_1
-[intTrapNDD1] = reglaTrapecio(PNDD1_1,-20,20,5);
-[intSimpNDD1] = reglaSimpson(PNDD1_1,-20,20,5);
-%2.   PNDF1_5
-[intTrapNDF2] = reglaTrapecio(PNDF1_5,-20,20,5);
-[intSimpNDF2] = reglaSimpson(PNDF1_5,-20,20,5);
+[intTrapNDD1_1] = reglaTrapecio(PNDD1_1,-20,20,5);
+[intSimpNDD1_1] = reglaSimpson(PNDD1_1,-20,20,5);
 %   Para la funcion f(x) = x^3+4*x^2-10*x+2
 %3.   PMC2_2
-[intTrapMC3] = reglaTrapecio(PMC2_2,-20,20,5);
-[intSimpMC3] = reglaSimpson(PMC2_2,-20,20,5);
-%4.   PNDD2_05
-[intTrapNDD4] = reglaTrapecio(PNDD2_05,-20,20,5);
-[intSimpNDD4] = reglaSimpson(PNDD2_05,-20,20,5);
+[intTrapMC2_5] = reglaTrapecio(PMC2_5,-20,20,5);
+[intSimpMC2_5] = reglaSimpson(PMC2_5,-20,20,5);
+%4.   PNDD2_5
+[intTrapNDD2_5] = reglaTrapecio(PNDD2_5,-20,20,5);
+[intSimpNDD2_5] = reglaSimpson(PNDD2_5,-20,20,5);
 %5.   PNDF2_05
-[intTrapNDF5] = reglaTrapecio(PNDF2_05,-20,20,5);
-[intSimpNDF5] = reglaSimpson(PNDF2_05,-20,20,5);
+[intTrapNDF2_05] = reglaTrapecio(PNDF2_05,-20,20,5);
+[intSimpNDF2_05] = reglaSimpson(PNDF2_05,-20,20,5);
 
 
 %%% ERROR PORCENTUAL DE LA INTEGRAL
 %   Para la funcion f(x) = e^x+x
 %0.   PMC1_05
-[errorIntegralTrapMC0] =  errorPorcentual(intRealFX1, intTrapMC0);
-[errorIntegralSimpMC0] = errorPorcentual(intRealFX1, intSimpMC0);
+[errorIntegralTrapMC0] =  errorPorcentual(intRealFX1, intTrapMC1_05);
+[errorIntegralSimpMC0] = errorPorcentual(intRealFX1, intSimpMC1_05);
 %1.   PNDD1_1
-[errorIntegralTrapNDD1] =  errorPorcentual(intRealFX1, intTrapNDD1);
-[errorIntegralSimpNDD1] = errorPorcentual(intRealFX1, intSimpNDD1);
-%2.   PNDF1_5
-[errorIntegralTrapNDF2] =  errorPorcentual(intRealFX1, intTrapNDF2);
-[errorIntegralSimpNDF2] = errorPorcentual(intRealFX1, intSimpNDF2);
+[errorIntegralTrapNDD1] =  errorPorcentual(intRealFX1, intTrapNDD1_1);
+[errorIntegralSimpNDD1] = errorPorcentual(intRealFX1, intSimpNDD1_1);
 %   Para la funcion f(x) = x^3+4*x^2-10*x+2
-%3.   PMC2_2
-[errorIntegralTrapMC3] =  errorPorcentual(intRealFX2, intTrapMC3);
-[errorIntegralSimpMC3] = errorPorcentual(intRealFX2, intSimpMC3);
-%4.   PNDD2_05
-[errorIntegralTrapNDD4] =  errorPorcentual(intRealFX2, intTrapNDD4);
-[errorIntegralSimpNDD4] = errorPorcentual(intRealFX2, intSimpNDD4);
+%3.   PMC2_51
+[errorIntegralTrapMC2_5] =  errorPorcentual(intRealFX2, intTrapMC2_5);
+[errorIntegralSimpMC2_5] = errorPorcentual(intRealFX2, intSimpMC2_5);
+%4.   PNDD2_5
+[errorIntegralTrapNDD2_5] =  errorPorcentual(intRealFX2, intTrapNDD2_5);
+[errorIntegralSimpNDD2_5] = errorPorcentual(intRealFX2, intSimpNDD2_5);
 %5.   PNDF2_05
-[errorIntegralTrapNDF5] =  errorPorcentual(intRealFX2, intTrapNDF5);
-[errorIntegralSimpNDF5] = errorPorcentual(intRealFX2, intSimpNDF5);
+[errorIntegralTrapNDF2_05] =  errorPorcentual(intRealFX2, intTrapNDF2_05);
+[errorIntegralSimpNDF2_05] = errorPorcentual(intRealFX2, intSimpNDF2_05);
 % 
 %
 % 
  save('..\test\data.mat'); 
+ 
 % 
 % 
